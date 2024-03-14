@@ -1,0 +1,53 @@
+version: "3.8"
+
+services:
+  service-registry:
+    container_name: service-registry
+    build:
+      context: ./service-registry/service-registry
+      dockerfile: Dockerfile
+    networks:
+      blogposts-network:
+    ports:
+      - "8761:8761"
+
+  api-gateway:
+    container_name: api-gateway
+    build:
+      context: ./api-gateway/api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "9191:9191"
+    networks:
+      blogposts-network:
+    depends_on:
+      - service-registry
+      - blogpost-service
+      - user-service
+    restart: on-failure
+
+  blogpost-service:
+    container_name: blogpost-service
+    build:
+      context: ./blogpost-service/blogpost-service
+      dockerfile: Dockerfile
+    networks:
+      blogposts-network:
+    depends_on:
+      - user-service
+      - service-registry
+    restart: on-failure
+
+  user-service:
+    container_name: user-service
+    build:
+      context: ./user-service/user-service
+      dockerfile: Dockerfile
+    networks:
+      blogposts-network:
+    depends_on:
+      - service-registry
+    restart: on-failure
+
+networks:
+  blogposts-network:
