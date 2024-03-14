@@ -1,6 +1,7 @@
 package com.blogposts.blogpostservice.entity;
 
 import com.blogposts.blogpostservice.entity.reaction.BlogpostReaction;
+import com.blogposts.blogpostservice.mapper.id.Identifiable;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -10,7 +11,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "blogposts")
-public class Blogpost {
+public class Blogpost implements Identifiable<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

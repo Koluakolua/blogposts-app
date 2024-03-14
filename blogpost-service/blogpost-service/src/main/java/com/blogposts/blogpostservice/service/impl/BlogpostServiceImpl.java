@@ -1,7 +1,7 @@
 package com.blogposts.blogpostservice.service.impl;
 
-import com.blogposts.blogpostservice.dto.CreateBlogpostDto;
-import com.blogposts.blogpostservice.dto.GetBlogpostDto;
+import com.blogposts.blogpostservice.dto.blogpost.CreateBlogpostDto;
+import com.blogposts.blogpostservice.dto.blogpost.GetBlogpostDto;
 import com.blogposts.blogpostservice.dto.GetUserDto;
 import com.blogposts.blogpostservice.entity.Blogpost;
 import com.blogposts.blogpostservice.mapper.BlogpostMapper;

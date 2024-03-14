@@ -1,5 +1,6 @@
-package com.blogposts.blogpostservice.dto;
+package com.blogposts.blogpostservice.dto.blogpost;
 
+import com.blogposts.blogpostservice.dto.GetUserDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

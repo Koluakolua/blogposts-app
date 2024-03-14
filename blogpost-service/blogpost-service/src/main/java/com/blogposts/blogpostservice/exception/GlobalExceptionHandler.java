@@ -35,13 +35,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         this.handleException(ex);
         ResponseErrorDetails details = new ResponseErrorDetails(
                 ex.getMessage(),
-                "FIELD_NOT_UNIQUE"
+                "CONSTRAINT_VIOLATION"
         );
         return new ResponseEntity<>(details, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(FeignException.class)
-    public ResponseEntity<ResponseErrorDetails> handleConstraintViolationException(FeignException ex) {
+    public ResponseEntity<ResponseErrorDetails> handleFeignException(FeignException ex) {
         this.handleException(ex);
         ResponseErrorDetails details = new ResponseErrorDetails(
                 ex.getMessage(),

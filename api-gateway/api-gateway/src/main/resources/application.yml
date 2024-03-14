@@ -7,14 +7,15 @@ spring:
         - id: BLOGPOST-SERVICE
           uri: lb://BLOGPOST-SERVICE
           predicates:
-            - Path=/api/v1/blogposts
+            - Path=/api/v1/blogposts/**
         - id: USER-SERVICE
           uri: lb://USER-SERVICE
           predicates:
-            - Path=/api/v1/users
+            - Path=/api/v1/users/**
 
 server:
   port: 9191
+
 
 management:
   endpoints:
@@ -26,3 +27,6 @@ eureka:
     client:
       serviceUrl:
         defaultZone: http://service-registry:8761/eureka/
+logging:
+  level:
+    root: trace
