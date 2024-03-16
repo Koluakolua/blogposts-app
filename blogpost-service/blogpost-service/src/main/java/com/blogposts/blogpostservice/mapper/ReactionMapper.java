@@ -4,14 +4,13 @@ import com.blogposts.blogpostservice.dto.reaction.CreateReactionDto;
 import com.blogposts.blogpostservice.dto.reaction.GetReactionDto;
 import com.blogposts.blogpostservice.entity.reaction.BlogpostReaction;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.Mapping;
 
-@Mapper
+@Mapper(componentModel = "spring", uses = IdMapper.class)
 public interface ReactionMapper {
-    ReactionMapper MAPPER = Mappers.getMapper(ReactionMapper.class);
+    @Mapping(source = "user", target = "userId", qualifiedByName = "toId")
+    BlogpostReaction toReaction(CreateReactionDto createReactionDto);
 
-
-    BlogpostReaction fromCreateReactionDto(CreateReactionDto createReactionDto);
-
-    GetReactionDto toGetReactionDto(BlogpostReaction blogpostReaction);
+    @Mapping(source = "userId", target = "user", qualifiedByName = "toIdDto")
+    GetReactionDto toGetReactionDto(BlogpostReaction reaction);
 }

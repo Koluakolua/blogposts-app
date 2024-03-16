@@ -1,6 +1,6 @@
 package com.blogposts.blogpostservice.dto.reaction;
 
-import com.blogposts.blogpostservice.dto.blogpost.GetBlogpostDto;
+import com.blogposts.blogpostservice.dto.IdDto;
 import com.blogposts.blogpostservice.entity.reaction.ReactionEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,9 +12,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetReactionDto {
-    private Long userId;
+    private IdDto user;
 
-    private GetBlogpostDto blogpost;
+    private IdDto blogpost;
 
     private ReactionEnum reaction;
 

@@ -1,5 +1,6 @@
 package com.blogposts.blogpostservice.dto.blogpost;
 
+import com.blogposts.blogpostservice.dto.IdDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -19,5 +20,5 @@ public class CreateBlogpostDto {
     private LocalDateTime createdWhen;
 
     @NotNull
-    private Long createdBy;
+    private IdDto createdBy;
 }

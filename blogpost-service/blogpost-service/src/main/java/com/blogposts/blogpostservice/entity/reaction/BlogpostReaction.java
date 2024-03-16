@@ -8,19 +8,16 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "blogpost_reactions", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"blogpost_id", "user_id"})
-})
+@Table(name = "blogpost_reactions")
+@IdClass(ReactionCompositeKey.class)
 public class BlogpostReaction {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @ManyToOne
-    @JoinColumn(name = "blogpost_id", nullable = false)
+    @JoinColumn(name = "blogpost_id", nullable = false, updatable = false)
     private Blogpost blogpost;
 
-    @Column(nullable = false)
+    @Id
+    @Column(nullable = false, updatable = false)
     private Long userId;
 
     @Column(nullable = false)

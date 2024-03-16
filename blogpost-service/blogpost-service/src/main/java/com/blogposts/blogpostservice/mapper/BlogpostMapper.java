@@ -1,20 +1,30 @@
 package com.blogposts.blogpostservice.mapper;
 
+import com.blogposts.blogpostservice.dto.GetUserDto;
 import com.blogposts.blogpostservice.dto.blogpost.CreateBlogpostDto;
 import com.blogposts.blogpostservice.dto.blogpost.GetBlogpostDto;
 import com.blogposts.blogpostservice.entity.Blogpost;
-import com.blogposts.blogpostservice.mapper.id.IdMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.Named;
 
-@Mapper(componentModel = "spring", uses = IdMapper.class)
+@Mapper(componentModel = "spring", uses = { IdMapper.class, ReactionMapper.class })
 public interface BlogpostMapper {
-    BlogpostMapper MAPPER = Mappers.getMapper(BlogpostMapper.class);
-
-    //TODO: add mapping from id to object with id
-    @Mapping(target = "createdBy", ignore = true)
+    @Mapping(target = "createdBy", qualifiedByName = "toGetUserDto")
     GetBlogpostDto toGetBlogpostResponseDto(Blogpost blogpost);
 
+    @Mapping(target = "createdBy", qualifiedByName = "toId")
     Blogpost fromCreateBlogpostRequestDto(CreateBlogpostDto createBlogpostDto);
+
+    //TODO: how to get rid of this duplication
+    @Named("toGetUserDto")
+    default GetUserDto toGetUserDto(Long id) {
+        if (id == null) {
+            return null;
+        }
+        GetUserDto getUserDto = new GetUserDto();
+        getUserDto.setId(id);
+        return getUserDto;
+    }
+
 }
