@@ -1,4 +1,4 @@
-package com.blogposts.blogpostservice.entity.reaction;
+package com.blogposts.blogpostservice.entity.view;
 
 import com.blogposts.blogpostservice.entity.Blogpost;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReactionCompositeKey implements Serializable {
+public class ViewCompositeKey implements Serializable {
     private Long userId;
     private Long blogpost;
 }

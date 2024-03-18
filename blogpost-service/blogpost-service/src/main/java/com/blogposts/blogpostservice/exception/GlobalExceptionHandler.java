@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -36,6 +37,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         ResponseErrorDetails details = new ResponseErrorDetails(
                 ex.getMessage(),
                 "CONSTRAINT_VIOLATION"
+        );
+        return new ResponseEntity<>(details, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ResourceAccessException.class)
+    public ResponseEntity<ResponseErrorDetails> handleConstraintViolationException(ResourceAccessException ex) {
+        this.handleException(ex);
+        ResponseErrorDetails details = new ResponseErrorDetails(
+                ex.getMessage(),
+                "ResourceAccessException"
         );
         return new ResponseEntity<>(details, HttpStatus.BAD_REQUEST);
     }

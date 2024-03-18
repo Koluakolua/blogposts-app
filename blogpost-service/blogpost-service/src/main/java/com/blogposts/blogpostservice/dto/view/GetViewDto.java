@@ -1,7 +1,6 @@
-package com.blogposts.blogpostservice.dto.reaction;
+package com.blogposts.blogpostservice.dto.view;
 
 import com.blogposts.blogpostservice.dto.IdDto;
-import com.blogposts.blogpostservice.entity.reaction.ReactionEnum;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,13 +12,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class GetReactionDto {
+public class GetViewDto {
     private IdDto user;
-
     private IdDto blogpost;
-
-    private ReactionEnum reaction;
-
     private LocalDateTime createdWhen;
-
 }

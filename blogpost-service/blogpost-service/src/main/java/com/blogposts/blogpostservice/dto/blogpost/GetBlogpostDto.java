@@ -20,4 +20,5 @@ public class GetBlogpostDto {
     private LocalDateTime createdWhen;
     private GetUserDto createdBy;
     private List<GetReactionDto> reactions;
+    private Long viewsCount;
 }

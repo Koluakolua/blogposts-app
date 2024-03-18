@@ -26,4 +26,7 @@ public class Blogpost {
 
     @OneToMany(mappedBy = "blogpost", cascade = CascadeType.REMOVE)
     private List<BlogpostReaction> reactions;
+
+    @Transient
+    private Long viewsCount;
 }

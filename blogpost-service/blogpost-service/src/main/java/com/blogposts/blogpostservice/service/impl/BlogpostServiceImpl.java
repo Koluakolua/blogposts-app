@@ -6,6 +6,7 @@ import com.blogposts.blogpostservice.dto.GetUserDto;
 import com.blogposts.blogpostservice.entity.Blogpost;
 import com.blogposts.blogpostservice.mapper.BlogpostMapper;
 import com.blogposts.blogpostservice.repository.BlogpostRepository;
+import com.blogposts.blogpostservice.repository.ViewRepository;
 import com.blogposts.blogpostservice.service.APIClient;
 import com.blogposts.blogpostservice.service.BlogpostService;
 import lombok.extern.slf4j.Slf4j;
@@ -18,19 +19,28 @@ import java.util.List;
 @Slf4j
 public class BlogpostServiceImpl implements BlogpostService {
     private final BlogpostRepository blogpostRepository;
+    private final ViewRepository viewRepository;
     private final APIClient apiClient;
     private final BlogpostMapper blogpostMapper;
 
     @Autowired
-    public BlogpostServiceImpl(BlogpostRepository blogpostRepository, APIClient apiClient, BlogpostMapper blogpostMapper) {
+    public BlogpostServiceImpl(BlogpostRepository blogpostRepository, ViewRepository viewRepository, APIClient apiClient, BlogpostMapper blogpostMapper) {
         this.blogpostRepository = blogpostRepository;
+        this.viewRepository = viewRepository;
         this.apiClient = apiClient;
         this.blogpostMapper = blogpostMapper;
     }
 
     @Override
     public List<GetBlogpostDto> getBlogposts() {
-        return this.blogpostRepository.findAll().stream().map(this.blogpostMapper::toGetBlogpostResponseDto).toList();
+        return this.blogpostRepository.findAll().stream().map(blogpost -> {
+            this.loadViewsCount(blogpost);
+            return this.blogpostMapper.toGetBlogpostResponseDto(blogpost);
+        }).toList();
+    }
+
+    private void loadViewsCount(Blogpost blogpost) {
+        blogpost.setViewsCount(this.viewRepository.countBlogpostViewByBlogpostId(blogpost.getId()));
     }
 
     @Override
