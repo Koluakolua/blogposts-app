@@ -5,37 +5,36 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class RabbitMQConfig {
-    @Value("${rabbitmq.queue.name}")
-    private String queueName;
-
-    @Value("${rabbitmq.exchange.name}")
-    private String exchangeName;
-
-    @Value("${rabbitmq.routing-key.name}")
-    private String routingKeyName;
+public class BlogpostRabbitMQConfig {
+    public static final String BLOGPOST_EXCHANGE_NAME = "blogpost.exchange";
+    public static final String USER_DELETE_QUEUE_NAME = "user.delete.queue";
 
     @Bean
-    public Queue blogpostQueue() {
-        return new Queue(queueName);
+    public TopicExchange blogpostExchange() {
+        return new TopicExchange(BLOGPOST_EXCHANGE_NAME);
+    }
+
+    //TODO: make a centralized exchange config with event names and interfaces
+    @Bean
+    public TopicExchange userExchange() {
+        return new TopicExchange("user.exchange");
     }
 
     @Bean
-    public TopicExchange exchange() {
-        return new TopicExchange(exchangeName);
+    public Queue userDeleteQueue() {
+        return new Queue(USER_DELETE_QUEUE_NAME);
     }
 
     @Bean
-    public Binding blogpostQueueBinding() {
+    public Binding userDeleteQueueBinding() {
         return BindingBuilder
-                .bind(blogpostQueue())
-                .to(exchange())
-                .with(routingKeyName);
+                .bind(userDeleteQueue())
+                .to(userExchange())
+                .with("user.delete");
     }
 
     @Bean

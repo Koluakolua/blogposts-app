@@ -1,6 +1,6 @@
-package com.blogposts.blogpostservice.rabbitmq;
+package com.blogposts.userservice.rabbitmq;
 
-import com.blogposts.blogpostservice.dto.blogpost.GetBlogpostDto;
+import com.blogposts.userservice.dto.GetUserDto;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ public class RabbitMQProducer {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public void produceEvent(RabbitMQEvent<GetBlogpostDto> event) {
-        this.rabbitTemplate.convertAndSend(BlogpostRabbitMQConfig.BLOGPOST_EXCHANGE_NAME, event.getEventName(), event);
+    public void produceEvent(RabbitMQEvent<GetUserDto> event) {
+        this.rabbitTemplate.convertAndSend(UserRabbitMQConfig.USER_EXCHANGE_NAME, event.getEventName(), event);
     }
 }
