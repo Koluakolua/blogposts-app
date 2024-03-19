@@ -2,7 +2,9 @@ package com.blogposts.blogpostservice.entity.view;
 
 import com.blogposts.blogpostservice.entity.Blogpost;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -10,6 +12,8 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "blogpost_views")
 @IdClass(ViewCompositeKey.class)
+@AllArgsConstructor
+@NoArgsConstructor
 public class BlogpostView {
     @Id
     @Column(nullable = false, updatable = false)

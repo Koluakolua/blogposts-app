@@ -1,6 +1,23 @@
 version: "3.8"
 
 services:
+  mysqldb:
+    container_name: mysql
+    image: mysql
+    networks:
+      blogposts-network:
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq
+    networks:
+      blogposts-network:
+    ports:
+      - "15672:15672"#user interface
+      - "5672:5672"
+
   service-registry:
     container_name: service-registry
     build:
@@ -24,6 +41,7 @@ services:
       - service-registry
       - blogpost-service
       - user-service
+      - mysqldb
     restart: on-failure
 
   blogpost-service:
@@ -36,6 +54,8 @@ services:
     depends_on:
       - user-service
       - service-registry
+      - mysqldb
+      - rabbitmq
     restart: on-failure
 
   user-service:
@@ -47,6 +67,8 @@ services:
       blogposts-network:
     depends_on:
       - service-registry
+      - mysqldb
+      - rabbitmq
     restart: on-failure
 
 networks:
