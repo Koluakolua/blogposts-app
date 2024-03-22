@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class UserRabbitMQConfig {
+public class RabbitMQConfig {
     public static final String USER_EXCHANGE_NAME = "user.exchange";
 
     @Bean

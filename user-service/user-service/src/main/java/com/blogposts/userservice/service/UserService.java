@@ -6,4 +6,6 @@ import com.blogposts.userservice.dto.GetUserDto;
 public interface UserService {
     GetUserDto getUser(Long id);
     GetUserDto createUser(CreateUserDto createUserDto);
+
+    Long deleteUser(Long id);
 }

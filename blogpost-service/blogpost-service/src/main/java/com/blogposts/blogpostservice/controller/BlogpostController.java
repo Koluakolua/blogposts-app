@@ -26,6 +26,11 @@ public class BlogpostController {
         return new ResponseEntity<>(this.blogpostService.getBlogposts(), HttpStatus.OK);
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity<GetBlogpostDto> getBlogpost(@PathVariable Long id) {
+        return new ResponseEntity<>(this.blogpostService.getBlogpost(id), HttpStatus.OK);
+    }
+
     @PostMapping("create")
     public ResponseEntity<GetBlogpostDto> createBlogpost(@RequestBody @Valid CreateBlogpostDto createBlogpostDto) {
         return new ResponseEntity<>(this.blogpostService.createBlogpost(createBlogpostDto), HttpStatus.CREATED);

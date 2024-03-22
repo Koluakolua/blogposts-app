@@ -1,6 +1,6 @@
 package com.blogposts.blogpostservice.dto.blogpost;
 
-import com.blogposts.blogpostservice.dto.GetUserDto;
+import com.blogposts.blogpostservice.dto.IdDto;
 import com.blogposts.blogpostservice.dto.reaction.GetReactionDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,7 @@ public class GetBlogpostDto {
     private Long id;
     private String text;
     private LocalDateTime createdWhen;
-    private GetUserDto createdBy;
+    private IdDto createdBy;
     private List<GetReactionDto> reactions;
     private Long viewsCount;
 }

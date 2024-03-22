@@ -1,9 +1,10 @@
 package com.blogposts.blogpostservice.service.impl;
 
+import com.blogposts.blogpostservice.dto.IdDto;
 import com.blogposts.blogpostservice.dto.blogpost.CreateBlogpostDto;
 import com.blogposts.blogpostservice.dto.blogpost.GetBlogpostDto;
-import com.blogposts.blogpostservice.dto.GetUserDto;
 import com.blogposts.blogpostservice.entity.Blogpost;
+import com.blogposts.blogpostservice.exception.ResourceNotFoundException;
 import com.blogposts.blogpostservice.mapper.BlogpostMapper;
 import com.blogposts.blogpostservice.repository.BlogpostRepository;
 import com.blogposts.blogpostservice.repository.ViewRepository;
@@ -39,6 +40,13 @@ public class BlogpostServiceImpl implements BlogpostService {
         }).toList();
     }
 
+    @Override
+    public GetBlogpostDto getBlogpost(Long id) {
+        Blogpost blogpost = this.blogpostRepository.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException("Blogpost", id.toString()));
+        return this.blogpostMapper.toGetBlogpostResponseDto(blogpost);
+    }
+
     private void loadViewsCount(Blogpost blogpost) {
         blogpost.setViewsCount(this.viewRepository.countBlogpostViewByBlogpostId(blogpost.getId()));
     }
@@ -47,11 +55,16 @@ public class BlogpostServiceImpl implements BlogpostService {
     public GetBlogpostDto createBlogpost(CreateBlogpostDto createBlogpostDto) {
         log.debug("CreateBlogpostDto:" + createBlogpostDto);
         //TODO: maybe explicitly wrap in catch and log dto-s
-        GetUserDto getUserDto = this.apiClient.getUser(createBlogpostDto.getCreatedBy().getId());
+        IdDto getUserDto = this.apiClient.getUser(createBlogpostDto.getCreatedBy().getId());
         Blogpost createBlogpost = this.blogpostMapper.fromCreateBlogpostRequestDto(createBlogpostDto);
         GetBlogpostDto getBlogpostDto = this.blogpostMapper.toGetBlogpostResponseDto(this.blogpostRepository.save(createBlogpost));
         getBlogpostDto.setCreatedBy(getUserDto);
         log.debug("GetBlogpostDto:" + getBlogpostDto);
         return getBlogpostDto;
+    }
+
+    @Override
+    public void deleteUsersBlogposts(Long userId) {
+        this.blogpostRepository.deleteBlogpostByCreatedBy(userId);
     }
 }

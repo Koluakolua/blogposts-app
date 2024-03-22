@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class BlogpostRabbitMQConfig {
+public class RabbitMQConfig {
     public static final String BLOGPOST_EXCHANGE_NAME = "blogpost.exchange";
     public static final String USER_DELETE_QUEUE_NAME = "user.delete.queue";
 

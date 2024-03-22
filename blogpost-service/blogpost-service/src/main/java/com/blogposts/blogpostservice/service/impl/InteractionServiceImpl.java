@@ -1,6 +1,6 @@
 package com.blogposts.blogpostservice.service.impl;
 
-import com.blogposts.blogpostservice.dto.GetUserDto;
+import com.blogposts.blogpostservice.dto.IdDto;
 import com.blogposts.blogpostservice.dto.reaction.CreateReactionDto;
 import com.blogposts.blogpostservice.dto.reaction.GetReactionDto;
 import com.blogposts.blogpostservice.dto.view.CreateViewDto;
@@ -14,7 +14,6 @@ import com.blogposts.blogpostservice.repository.ReactionRepository;
 import com.blogposts.blogpostservice.repository.ViewRepository;
 import com.blogposts.blogpostservice.service.APIClient;
 import com.blogposts.blogpostservice.service.InteractionService;
-import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,7 +42,7 @@ public class InteractionServiceImpl implements InteractionService {
     @Override
     public GetReactionDto reactToPost(CreateReactionDto createReactionDto) {
         //TODO: maybe handle getUser error and unique constraint explicitly
-        GetUserDto getUserDto = this.apiClient.getUser(createReactionDto.getUser().getId());
+        IdDto getUserDto = this.apiClient.getUser(createReactionDto.getUser().getId());
         BlogpostReaction reaction = this.reactionMapper.toReaction(createReactionDto);
 
         //TODO: make a separate DELETE method
@@ -62,7 +61,7 @@ public class InteractionServiceImpl implements InteractionService {
     @Override
     public GetViewDto viewPost(CreateViewDto createViewDto) {
         //TODO: maybe handle getUser error and unique constraint explicitly
-        GetUserDto getUserDto = this.apiClient.getUser(createViewDto.getUser().getId());
+        IdDto getUserDto = this.apiClient.getUser(createViewDto.getUser().getId());
 
         BlogpostView blogpostView = this.viewMapper.toView(createViewDto);
         Optional<BlogpostView> blogpostViewFromDb = this.viewRepository.findById(new ViewCompositeKey(
